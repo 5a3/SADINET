@@ -145,7 +145,14 @@ html {
     height: 220px;
     margin: 20px auto;
     overflow: hidden;
-    padding-right: 33%
+    padding-right: 33%;
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y;
+}
+
+.ads:active {
+    cursor: grabbing;
 }
 
 @-webkit-keyframes animate {

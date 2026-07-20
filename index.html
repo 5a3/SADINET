@@ -132,10 +132,78 @@
             if (clockEl) clockEl.innerText = timeString;
         }
 
+        function init3DBoxDrag() {
+            var ads = document.querySelector('.ads');
+            var box = document.getElementById('adsbox');
+            if (!ads || !box) return;
+
+            var isDragging = false;
+            var startX = 0;
+            var currentAngle = 0;
+
+            function getRotateY(el) {
+                var st = window.getComputedStyle(el, null);
+                var tr = st.getPropertyValue("transform");
+                if (tr && tr !== "none") {
+                    var values = tr.split('(')[1].split(')')[0].split(',');
+                    if (values.length === 16) {
+                        var a = parseFloat(values[0]);
+                        var b = parseFloat(values[2]);
+                        var rad = Math.atan2(-b, a);
+                        return rad * (180 / Math.PI);
+                    }
+                }
+                return currentAngle;
+            }
+
+            ads.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                startX = e.clientX;
+                currentAngle = getRotateY(box);
+                box.style.animation = 'none';
+                ads.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mousemove', function (e) {
+                if (!isDragging) return;
+                var deltaX = e.clientX - startX;
+                var newAngle = currentAngle + (deltaX * 0.4);
+                box.style.transform = 'perspective(1000px) rotateY(' + newAngle + 'deg)';
+            });
+
+            window.addEventListener('mouseup', function () {
+                if (isDragging) {
+                    isDragging = false;
+                    ads.style.cursor = 'grab';
+                }
+            });
+
+            ads.addEventListener('touchstart', function (e) {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                currentAngle = getRotateY(box);
+                box.style.animation = 'none';
+            }, { passive: true });
+
+            window.addEventListener('touchmove', function (e) {
+                if (!isDragging) return;
+                var deltaX = e.touches[0].clientX - startX;
+                var newAngle = currentAngle + (deltaX * 0.4);
+                box.style.transform = 'perspective(1000px) rotateY(' + newAngle + 'deg)';
+            }, { passive: true });
+
+            window.addEventListener('touchend', function () {
+                if (isDragging) {
+                    isDragging = false;
+                }
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             initDynamicQuran();
             updateDateTime();
             setInterval(updateDateTime, 1000);
+            init3DBoxDrag();
         });
     </script>
     <div class="container">
@@ -249,8 +317,6 @@
                         </p>
                     </section>
                     <p class="error" style="margin-top: 5px;" id="error"></p>
-                    <a style="text-decoration: none ;font-size: 13px; padding: 6px 8px; border: 1px solid ;border-radius: 10px;"
-                        href="https://www.tvquran.com/">انقر هنا لفتح موقع القران الكريم مجانا</a>
                     <div class="login-form">
                         <form name="login" onsubmit="return onLoginSubmitted()"><input type="hidden" name="dst"
                                 value="$(link-orig)" />
@@ -282,6 +348,16 @@
                                 <img class="icon" src="img/nl.png" alt="">
                             </button>
                         </form>
+                        <!-- <div style="display: none; margin: 12px auto 8px auto; width: 90%; gap: 8px; justify-content: center;">
+                            <a href="match.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 10px; background: linear-gradient(135deg, #015081, #23b111); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);">
+                                <span>⚽</span>
+                                <span>مباريات اليوم</span>
+                            </a>
+                            <a href="estra7h.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 10px; background: linear-gradient(135deg, #015081, #3e9de6); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);">
+                                <span>🎬</span>
+                                <span>الاستراحة والبث</span>
+                            </a>
+                        </div> -->
                         <div class="btns">
                             <table>
                                 <tr>
@@ -562,6 +638,12 @@
                                     <option value="very">سرعة عالية</option>
                                 </select>
                             </span>
+                        </div>
+                        <div style="margin: 15px auto; text-align: center;">
+                            <a style="display: inline-block; text-decoration: none; color: #fff; background: linear-gradient(135deg, #11998e, #38ef7d); border: 1px solid rgba(255,255,255,0.3); font-size: 14px; font-weight: 800; padding: 10px 18px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                                href="https://www.tvquran.com/" target="_blank">
+                                📖 انقر هنا لفتح موقع القرآن الكريم مجاناً
+                            </a>
                         </div>
                         <button class=" app-submit logout-submit" erase-cookie clear-hot-cookie>تسجيل الخروج </button>
                         <div class="btns btns2">
