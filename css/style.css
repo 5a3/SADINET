@@ -129,10 +129,10 @@ html {
 }
 
 .logo {
-    height: 160px;
+    height: 260px;
     width: 100%;
-    max-width: 320px;
-    margin: 10px auto 0;
+    max-width: 390px;
+    margin: 5px auto 0;
     position: relative;
     z-index: 2;
     background: url(../img/logo.png) no-repeat center center;
@@ -349,7 +349,7 @@ html {
 .addimg::after {
     z-index: -2;
     position: absolute;
-    padding-top: 90px;
+    padding-top: 50px;
     background: url(../img/logo.svg) no-repeat;
     background-size: contain;
     background-position: 0 5%;
