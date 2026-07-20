@@ -106,7 +106,37 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", initDynamicQuran);
+        function updateDateTime() {
+            var now = new Date();
+            var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var arabicDate = now.toLocaleDateString('ar-EG', dateOptions);
+
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            var strHours = hours < 10 ?  hours : hours;
+            var strMinutes = minutes < 10 ? '0' + minutes : minutes;
+            var strSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+            var timeString = strHours + ':' + strMinutes + ':' + strSeconds + ' ' + ampm;
+
+            var dateEl = document.getElementById('live-date');
+            var clockEl = document.getElementById('live-clock');
+
+            if (dateEl) dateEl.innerText = arabicDate;
+            if (clockEl) clockEl.innerText = timeString;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initDynamicQuran();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
     </script>
     <div class="container">
         <div class="bk7">
@@ -152,6 +182,12 @@
                 </div>
                 <div class="login">
                     <h1 class="netname">شبكة سعدي نت </h1>
+                    <div style="display: flex; justify-content: center; margin: 4px 0 10px 0;">
+                        <div class="datetime-badge" style="display: inline-block; padding: 6px 16px; background: rgba(1, 80, 129, 0.45); backdrop-filter: blur(8px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.25); text-align: center; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                            <div id="live-date" style="font-size: 12px; font-weight: 700; opacity: 0.95;"></div>
+                            <div id="live-clock" style="font-size: 16px; font-weight: 900; color: #ffd700; margin-top: 2px; direction: ltr;"></div>
+                        </div>
+                    </div>
                     <div style="position: relative ;" class="ads">
                         <div class="box" id="adsbox">
                             <span style="--i:1">
