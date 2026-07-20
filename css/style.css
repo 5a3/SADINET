@@ -129,13 +129,15 @@ html {
 }
 
 .logo {
-    height: 180px;
-    margin-top: 0;
-    width: 350px;
-    margin: 0 auto;
-    background: url(../img/logo.png) no-repeat;
-    background-size: 100% auto;
-    background-position: center bottom
+    height: 160px;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto 0;
+    position: relative;
+    z-index: 2;
+    background: url(../img/logo.png) no-repeat center center;
+    background-size: contain;
+    filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
 }
 
 .ads {
@@ -857,4 +859,29 @@ a {
     left: 0;
     width: 40%;
     animation: logoth 2s
+}
+
+.dev-credits {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+    color: #444;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.dev-credits p {
+    margin: 2px 0;
+}
+
+.dev-credits a {
+    color: #015081;
+    text-decoration: none;
+    font-weight: bold;
+    height: auto;
+}
+
+.dev-credits a:hover {
+    color: #f38728;
 }
