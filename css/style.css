@@ -129,10 +129,10 @@ html {
 }
 
 .logo {
-    height: 260px;
+    height: 230px;
     width: 100%;
-    max-width: 390px;
-    margin: 5px auto 0;
+    max-width: 420px;
+    margin: 5px auto -30px;
     position: relative;
     z-index: 2;
     background: url(../img/logo.png) no-repeat center center;
