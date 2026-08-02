@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#3e9de6" />
+    <title>سعدي نت</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .img1::before,
+    .img6::before {
+        content: "أسعار تناسب الجميع  ";
+    }
+
+    .img2::before,
+    .img7::before {
+        content: "إنترنت فضائي فائق السرعة";
+    }
+
+    .img3::before,
+    .img8::before {
+        content: "عروض حصرية ومميزات لا تنتهي ";
+    }
+
+    .img4::before,
+    .img9::before {
+        content: "مركز الحياة الطبي التخصصي";
+    }
+
+    .img5::before,
+    .img10::before {
+        content: "يصلك الإنترنت الى  بيتك ";
+    }
+</style>
+
+<body translate="no">
+    <script>
+        function gco() {
+            var username = "";
+            var speed = "";
+            var date = new Date();
+            date.setTime(date.getTime() + (5 * 1000));
+            var expires = date.toGMTString();
+            var SP = document.cookie.split(';');
+            for (var i = 0; i < SP.length; i++) {
+                var name_value = SP[i].trim();
+                if (name_value.indexOf("username=") === 0) {
+                    username = name_value.split('=')[1];
+                }
+                if (name_value.indexOf("speeded=") === 0) {
+                    speed = name_value.split('=')[1];
+                }
+                if (name_value.indexOf("error=") === 0) {
+                    return;
+                }
+            }
+
+            if (username !== "") {
+                document.cookie = 'error=1;expires=' + expires + '; path=/';
+                window.location.href = "$(link-login-only)" + '?username=' + encodeURIComponent(username);
+            }
+        }
+        gco();
+
+        function initDynamicQuran() {
+            var quranVerses = [
+                "﴿ قُل لِّلۡمُؤۡمِنِينَ يَغُضُّواْ مِنۡ أَبۡصَٰرِهِمۡ وَيَحۡفَظُواْ فُرُوجَهُمۡۚ ذَٰلِكَ أَزۡكَىٰ لَهُمۡۚ إِنَّ ٱللَّهَ خَبِيرُۢ بِمَا يَصۡنَعُونَ ﴾ [النور: 30]",
+                "﴿ أَلَا بِذِكۡرِ ٱللَّهِ تَطۡمَئِنُّ ٱلۡقُلُوبُ ﴾ [الرعد: 28]",
+                "﴿ وَمَن يَتَّقِ ٱللَّهَ يَجۡعَل لَّهُۥ مَخۡرَجٗا ۝ وَيَرۡزُقۡهُ مِنۡ حَيۡثُ لَا يَحۡتَسِبُ ﴾ [الطلاق: 2-3]",
+                "﴿ فَإِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرًا ۝ إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرًا ﴾ [الشرح: 5-6]",
+                "﴿ وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌۖ أُجِيبُ دَعۡوَةَ ٱلدَّاعِ إِذَا دَعَانِ ﴾ [البقرة: 186]",
+                "﴿ وَتَوَكَّلۡ عَلَى ٱلۡحَيِّ ٱلَّذِي لَا يَمُوتُ وَسَبِّحۡ بِحَمۡدِهِۦ ﴾ [الفرقان: 58]",
+                "﴿ إِنَّ ٱللَّهَ وَمَلَٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِيِّۚ يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ صَلُّواْ عَلَيۡهِ وَسَلِّمُواْ تَسۡلِيمًا ﴾ [الأحزاب: 56]",
+                "﴿ وَقُل رَّبِّ زِدۡنِي عِلۡمٗا ﴾ [طه: 114]",
+                "﴿ إِنَّ مَعِيَ رَبِّي سَيَهۡدِينِ ﴾ [الشعراء: 62]",
+                "﴿ رَبَّنَآ ءَاتِنَا فِي ٱلدُّنۡيَا حَسَنَةٗ وَفِي ٱلۡأَخِرَةِ حَسَنَةٗ وَقِنَا عَذَابَ ٱلنَّارِ ﴾ [البقرة: 201]",
+                "﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾ [البقرة: 152]",
+                "﴿ وَاصْبِرْ فَإِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ ﴾ [هود: 115]",
+                "﴿ وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ﴾ [الطلاق: 3]",
+                "﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾ [البقرة: 153]",
+                "﴿ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ﴾ [إبراهيم: 7]",
+                "﴿ وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ ﴾ [البقرة: 216]",
+                "﴿ إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِّـنَ الْمُحْسِنِينَ ﴾ [الأعراف: 56]",
+                "﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾ [هود: 88]",
+                "﴿ وَقُل لِّعِبَادِي يَقُولُوا الَّتِي هِيَ أَحْسَنُ ﴾ [الإسراء: 53]",
+                "﴿ إِنَّ ٱللَّهَ يُحِبُّ ٱلۡمُحۡسِنِينَ ﴾ [البقرة: 195]",
+                "﴿ وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ ﴾ [الحديد: 4]",
+                "﴿ وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ ﴾ [الضحى: 5]",
+                "﴿ سَيَجْعَلُ اللَّهُ بَعْدَ عُسْرٍ يُسْرًا ﴾ [الطلاق: 7]",
+                "﴿ فَاسْتَجَبْنَا لَهُ وَنَجَّيْنَاهُ مِنَ الْغَمِّ وَكَذَلِكَ نُنجِي الْمُؤْمِنِينَ ﴾ [الأنبياء: 88]",
+                "﴿ ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ ﴾ [الفاتحة: 2]",
+                "﴿ إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ ﴾ [البقرة: 173]",
+                "﴿ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ﴾ [الطلاق: 3]",
+                "﴿ ٱدۡعُ إِلَىٰ سَبِيلِ رَبِّكَ بِٱلۡحِكۡمَةِ وَٱلۡمَوْعِظَةِ ٱلۡحَسَنَةِ ﴾ [النحل: 125]"
+            ];
+
+            var twelveHoursMs = 12 * 60 * 60 * 1000;
+            var currentBlock = Math.floor(Date.now() / twelveHoursMs);
+            var ayahIndex = currentBlock % quranVerses.length;
+
+            var marqueeEl = document.getElementById("dynamic-quran-ayah");
+            if (marqueeEl) {
+                marqueeEl.innerHTML = quranVerses[ayahIndex];
+            }
+        }
+
+        function updateDateTime() {
+            var now = new Date();
+            var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var arabicDate = now.toLocaleDateString('ar-EG', dateOptions);
+
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            var ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            var strHours = hours < 10 ? hours : hours;
+            var strMinutes = minutes < 10 ? '0' + minutes : minutes;
+            var strSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+            var timeString = strHours + ':' + strMinutes + ':' + strSeconds + ' ' + ampm;
+
+            var dateEl = document.getElementById('live-date');
+            var clockEl = document.getElementById('live-clock');
+
+            if (dateEl) dateEl.innerText = arabicDate;
+            if (clockEl) clockEl.innerText = timeString;
+        }
+
+        function init3DBoxDrag() {
+            var ads = document.querySelector('.ads');
+            var box = document.getElementById('adsbox');
+            if (!ads || !box) return;
+
+            var isDragging = false;
+            var startX = 0;
+            var currentAngle = 0;
+
+            function getRotateY(el) {
+                var st = window.getComputedStyle(el, null);
+                var tr = st.getPropertyValue("transform");
+                if (tr && tr !== "none") {
+                    var values = tr.split('(')[1].split(')')[0].split(',');
+                    if (values.length === 16) {
+                        var a = parseFloat(values[0]);
+                        var b = parseFloat(values[2]);
+                        var rad = Math.atan2(-b, a);
+                        return rad * (180 / Math.PI);
+                    }
+                }
+                return currentAngle;
+            }
+
+            ads.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                startX = e.clientX;
+                currentAngle = getRotateY(box);
+                box.style.animation = 'none';
+                ads.style.cursor = 'grabbing';
+            });
+
+            window.addEventListener('mousemove', function (e) {
+                if (!isDragging) return;
+                var deltaX = e.clientX - startX;
+                var newAngle = currentAngle + (deltaX * 0.4);
+                box.style.transform = 'perspective(1000px) rotateY(' + newAngle + 'deg)';
+            });
+
+            window.addEventListener('mouseup', function () {
+                if (isDragging) {
+                    isDragging = false;
+                    ads.style.cursor = 'grab';
+                }
+            });
+
+            ads.addEventListener('touchstart', function (e) {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                currentAngle = getRotateY(box);
+                box.style.animation = 'none';
+            }, { passive: true });
+
+            window.addEventListener('touchmove', function (e) {
+                if (!isDragging) return;
+                var deltaX = e.touches[0].clientX - startX;
+                var newAngle = currentAngle + (deltaX * 0.4);
+                box.style.transform = 'perspective(1000px) rotateY(' + newAngle + 'deg)';
+            }, { passive: true });
+
+            window.addEventListener('touchend', function () {
+                if (isDragging) {
+                    isDragging = false;
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            initDynamicQuran();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            init3DBoxDrag();
+        });
+    </script>
+    <div class="container">
+        <div class="bk7">
+            <svg width="100%" preserveAspectRatio="none" height="500" viewBox="0 0 500 500 ">
+                <rect width="100%" height="100%" fill="none" />
+                <g stroke="lightgray" stroke-width="0.5">
+                    <line x1="0" y1="250" x2="500" y2="250" />
+                    <line x1="250" y1="0" x2="250" y2="500" />
+                    <g stroke="lightgray">
+                        <line x1="0" y1="0" x2="500" y2="0" />
+                        <line x1="0" y1="50" x2="500" y2="50" />
+                        <line x1="0" y1="100" x2="500" y2="100" />
+                        <line x1="0" y1="150" x2="500" y2="150" />
+                        <line x1="0" y1="200" x2="500" y2="200" />
+                        <line x1="0" y1="300" x2="500" y2="300" />
+                        <line x1="0" y1="350" x2="500" y2="350" />
+                        <line x1="0" y1="400" x2="500" y2="400" />
+                        <line x1="0" y1="450" x2="500" y2="450" />
+                        <line x1="0" y1="500" x2="500" y2="500" />
+                        <line x1="0" y1="0" x2="0" y2="500" />
+                        <line x1="50" y1="0" x2="50" y2="500" />
+                        <line x1="100" y1="0" x2="100" y2="500" />
+                        <line x1="150" y1="0" x2="150" y2="500" />
+                        <line x1="200" y1="0" x2="200" y2="500" />
+                        <line x1="300" y1="0" x2="300" y2="500" />
+                        <line x1="350" y1="0" x2="350" y2="500" />
+                        <line x1="400" y1="0" x2="400" y2="500" />
+                        <line x1="450" y1="0" x2="450" y2="500" />
+                        <line x1="500" y1="0" x2="500" y2="500" />
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="screen">
+            <div class="bk bk1"></div>
+            <div class="bk bkr bk2"></div>
+            <div class="bk bk3"></div>
+            <div class="bk bkr bk4"></div>
+            <div class="bk bk5"></div>
+            <div class="bk bkr bk6"></div>
+            <div class="screen-content">
+                <div class="logo">
+                </div>
+                <div class="login">
+                    <h1 class="netname">شبكة سعدي نت </h1>
+                    <div style="display: flex; justify-content: center; margin: 2px 0 6px 0;">
+                        <div class="datetime-badge"
+                            style="display: flex; align-items: center; gap: 8px; padding: 3px 12px; background: rgba(1, 80, 129, 0.45); backdrop-filter: blur(6px); border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+                            <div id="live-date" style="font-size: 11px; font-weight: 700; opacity: 0.95;"></div>
+                            <span style="opacity: 0.4; font-size: 10px;">•</span>
+                            <div id="live-clock"
+                                style="font-size: 12px; font-weight: 900; color: #ffd700; direction: ltr;">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: relative ;" class="ads">
+                        <div class="box" id="adsbox">
+                            <span style="--i:1">
+                                <div class="img3 img"></div>
+                            </span>
+                            <span style="--i:2">
+                                <div class="img4 img"></div>
+                            </span>
+                            <span style="--i:3">
+                                <div class="img5 img"></div>
+                            </span>
+                            <span style="--i:4">
+                                <div class="img1 img"></div>
+                            </span>
+                            <span style="--i:5">
+                                <div class="img2 img"></div>
+                            </span>
+                            <span style="--i:6">
+                                <div class="img8 img"></div>
+                            </span>
+                            <span style="--i:7">
+                                <div class="img9 img"></div>
+                            </span>
+                            <span style="--i:8">
+                                <div class="img10 img"></div>
+                            </span>
+                            <span style="--i:9">
+                                <div class="img6 img"></div>
+                            </span>
+                            <span style="--i:10">
+                                <div class="img7 img"></div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="adds">
+                        <div class="addcont">
+                            <div class="addimg"></div>
+                            <div class="addimg"></div>
+                            <div class="addimg"></div>
+                            <div class="addimg"></div>
+                            <div class="addimg"></div>
+                        </div>
+                        <button type="button" id="left"> > </button>
+                        <button type="button" id="right">
+                            < </button>
+                    </div>
+                    <div class="oflowimg">
+                        <button type="button" class="closs">إغلاق</button>
+                        <img id="flowimg" alt="">
+                    </div>
+                    <section class="section">
+                        <p class="marquee" id="dynamic-quran-ayah">
+                            ﴿ قُل لِّلۡمُؤۡمِنِينَ يَغُضُّواْ مِنۡ أَبۡصَٰرِهِمۡ وَيَحۡفَظُواْ فُرُوجَهُمۡۚ ذَٰلِكَ
+                            أَزۡكَىٰ لَهُمۡۚ إِنَّ ٱللَّهَ خَبِيرُۢ بِمَا يَصۡنَعُونَ ﴾
+                        </p>
+                    </section>
+                    <p class="error" style="margin-top: 5px;" id="error"></p>
+                    <div class="login-form">
+                        <form name="login" onsubmit="return onLoginSubmitted()"><input type="hidden" name="dst"
+                                value="$(link-orig)" />
+
+                            <select id="se" name="" id=""></select>
+
+
+                            <input type="hidden" to-lower name="popup" value="true" />
+                            <div class="login-field">
+                                <img class="login-icon" src="img/user.svg" alt="#" /><input class="login-input"
+                                    name="username" type="text" value="" placeholder="أدخل رقم الكرت هنا" required
+                                    autocomplete="off" username-field rm-white-spaces improve-input to-arabic-numbers
+                                    to-lower />
+                            </div>
+                            <div class="login-field">
+                                <select class="login-input" id="speed" name="speed" speed-field
+                                    style="text-align-last: center; padding: 0 15px; cursor: pointer;">
+                                    <option value="" selected disabled hidden>اختيار سرعة الإنترنت</option>
+                                    <option value="economic">سرعة اقتصادية</option>
+                                    <option value="normal">سرعة افتراضية</option>
+                                    <option value="middle">سرعة متوسطة</option>
+                                    <option value="very">سرعة عالية</option>
+                                </select>
+                            </div>
+                            <label>
+                                <input name="password" type="hidden" placeholder="كلمة المرور" />
+                            </label>
+                            <button type="button" class="login-submit" enable-hot-cookie>تسجيل الدخول
+                                <img class="icon" src="img/nl.png" alt="">
+                            </button>
+                        </form>
+                        <!-- <div style="display: none; margin: 12px auto 8px auto; width: 90%; gap: 8px; justify-content: center;">
+                            <a href="match.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 10px; background: linear-gradient(135deg, #015081, #23b111); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);">
+                                <span>⚽</span>
+                                <span>مباريات اليوم</span>
+                            </a>
+                            <a href="estra7h.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 10px; background: linear-gradient(135deg, #015081, #3e9de6); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);">
+                                <span>🎬</span>
+                                <span>الاستراحة والبث</span>
+                            </a>
+                        </div> -->
+                        <div class="btns">
+                            <table>
+                                <tr>
+                                    <td><button type="button" parent-id="price">
+                                            <div class="btnicon d">
+
+                                            </div>
+                                            الاسعار
+                                        </button></td>
+                                    <td> <button type="button" parent-id="sell-point">
+                                            <div class="btnicon l">
+                                            </div>
+                                            نقاط البيع
+                                        </button></td>
+                                    <td><button type="button" parent-id="info">
+                                            <div class="btnicon i">
+                                            </div>
+                                            خدماتنا
+                                        </button></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="margin-top: -10px;" class="btns btns2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a style="padding-right:20px ;" href="tel:+967773134765">اتصال
+                                            <img class="login-icon a-icon" src="img/c.svg" alt="#" /></a>
+                                        <br>
+                                        773134765
+                                    </td>
+                                    <td style="width: 33%;">
+                                        <img src="img/robot.png" width="100%" alt="">
+                                    </td>
+                                    <td>
+                                        <a style="padding-left:20px ;" href="sms:+967773134765">
+                                            <img style="left: 1px; right: unset;" class="login-icon a-icon"
+                                                src="img/w.svg" alt="#" />
+                                            راسلنا</a>
+                                        <br>
+                                        773134765
+                                    </td>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h3>خدمة العملاء</h3>
+                            <h4>738172536 - 773134765 </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="app" id="price">
+                    <p class="title">الاسعار </p>
+                    <div class="app-bot">
+                        <table style="width: 90%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 10px;">السعر</th>
+                                    <th style="padding: 10px;">الرصيد</th>
+                                    <th style="padding: 10px;">السرعة </th>
+                                    <th style="padding: 10px;">الصلاحية</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>100 </td>
+                                    <td>تحميل مفتوح</td>
+                                    <td>1 جيجا </td>
+                                    <td>يوم </td>
+                                </tr>
+                                <tr>
+                                    <td>200 </td>
+                                    <td>تحميل مفتوح</td>
+                                    <td>1.5 جيجا </td>
+                                    <td>5 ايام </td>
+                                </tr>
+                                <tr>
+                                    <td>500 </td>
+                                    <td> التحميل مفتوح</td>
+                                    <td>4 جيجا </td>
+                                    <td>اسبوع </td>
+                                </tr>
+                                <tr>
+                                    <td>1000 </td>
+                                    <td>التحميل مفتوح</td>
+                                    <td>10 جيجا </td>
+                                    <td>10ايام </td>
+                                </tr>
+                                <tr>
+                                    <td>2000 </td>
+                                    <td>التحميل مفتوح</td>
+                                    <td>20 جيجا </td>
+                                    <td>شهر </td>
+                                </tr>
+                                <tr>
+                                    <td>4000 </td>
+                                    <td>التحميل مفتوح</td>
+                                    <td>50 جيجا </td>
+                                    <td>شهر </td>
+                                </tr>
+                                <tr>
+                                    <td>6000 </td>
+                                    <td>التحميل مفتوح</td>
+                                    <td>65 جيجا </td>
+                                    <td>شهر </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="app-logout app-submit">رجوع </div>
+                    </div>
+                </div>
+                <div class="app" id="sell-point">
+                    <p class="title">نقاط البيع </p>
+                    <div class="app-bot">
+                        <table style="width: 85%; border-collapse: collapse;">
+                            <tbody>
+                                <tr>
+                                    <td>بقالة ارياف حضرموت </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة بدابه </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة محمد الشامي </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة احمد زكي باخبيره </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة الرحمه-الجسر </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة مجمع بن منيف </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة اللواء الاخضر </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة الحميدي </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة مركز الحياه </td>
+                                </tr>
+                                <tr>
+                                    <td>مشرب وكفترياء المعنى </td>
+                                </tr>
+                                <tr>
+                                    <td>محل ترند موبايل </td>
+                                </tr>
+                                <tr>
+                                    <td>محل التلميع الساطع </td>
+                                </tr>
+                                <tr>
+                                    <td>محل قوقل للجولات </td>
+                                </tr>
+                                <tr>
+                                    <td>بقالة عبدالله علي باحفين </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="app-logout app-submit">رجوع </div>
+                    </div>
+                </div>
+                <div class="app" id="info">
+                    <p class="title">خدماتنا </p>
+                    <div class="app-bot">
+
+                        <img src="img/1.jpg" style="width: 90%; border-radius: 10px ;" alt="">
+                        <center>
+                            <h3>🚀 وداعاً لبطء الإنترنت.. <br>استمتع بالمستقبل مع "سعدي نت"! 🚀</h3>
+                        </center>
+
+                        <br>
+
+                        <p>
+                            هل تبحث عن سرعة خيالية وتغطية لا تنقطع؟ <br>
+                            <b>شبكة سعدي نت</b> توفر لك الآن خدمة إنترنت <b>ستارلينك (Starlink)</b> الفضائي فائقة
+                            السرعة، مباشرة
+                        </p>
+
+                        <br>
+                        <h3>✨ لماذا تختار "سعدي نت"؟</h3>
+                        <br>
+                        <ul>
+                            <li><b>🌐 إنترنت فضائي فائق السرعة:</b> تحميل، تصفح، وألعاب أونلاين بدون تعليق.</li>
+                            <li><b>🏠 تغطية منزلية:</b> نوصل لك الخدمة إلى باب بيتك بكل سهولة.</li>
+                            <li><b>💰 باقات اقتصادية:</b> أسعار تناسب الجميع مع عروض حصرية ومميزات لا تنتهي.</li>
+                        </ul>
+                        <br>
+                        <blockquote style="background-color: #ffffcc; padding: 10px; border: 1px solid #ffcc00;">
+                            <b>🎁
+                        </blockquote>
+                        <br>
+                        <h2>🏟️ أكثر من مجرد إنترنت</h2>
+                        <p>استمتع بزيارة <u>استراحة الشبكة الخاصة</u>، المجهزة بالكامل لمتابعة:</p>
+                        <ul>
+                            <li>⚽ أقوى مباريات كرة القدم العالمية.</li>
+                            <li>🎬 أحدث المسلسلات والأفلام بجودة عالية.</li>
+                            <li>☕ أجواء مريحة وخدمات مميزة بانتظارك.</li>
+                        </ul>
+
+                        <p><b>📍 ملاحظة:</b> لسناء الوحيدون ولكننا الافض.</p>
+
+                        <br>
+
+                        <h4>📞 للحجز أو الاستفسار (اتصال أو واتساب):</h4>
+                        <p>
+                            📲 <b>773137465</b><br>
+                            📲 <b>738172536</b>
+                        </p>
+
+                        <center>
+                            <p><i>سعدي نت.. خيارك الأول لإنترنت بلا حدود! 🛰️✨</i></p>
+                        </center>
+
+
+                        <div class="app-logout app-submit">رجوع </div>
+                    </div>
+                </div>
+                <div class="app" id="status">
+                    <div class="app-top">
+                        <h1 class="netname">شبكة سعدي نت </h1>
+
+                        <p class="title">تم تسجيل الدخول بنجاح
+                    </div>
+                    <br>
+                    <div class="app-bot">
+
+                        <div class="logobar">
+                            <div class="logoth"><a style="font-size: 16px;" class="c1" href="/estra7h.html"
+                                    target="_blank"><svg xmlns="http://www.w3.org/2000/svg" height="60" width="100"
+                                        fill="#d4002e" viewBox="0 0 511.999 511.999">
+                                        <path
+                                            d="M409.176 97.679H100.967a7.615 7.615 0 00-7.616 7.616v301.411a7.615 7.615 0 007.616 7.616h308.209a7.615 7.615 0 007.616-7.616V105.295a7.615 7.615 0 00-7.616-7.616zm-7.616 301.41H108.583V112.911H401.56v286.178z" />
+                                        <path
+                                            d="M344.68 236.885a7.612 7.612 0 00-6.377-5.214l-53.82-6.152L262 176.234a7.613 7.613 0 00-10.09-3.768 7.614 7.614 0 00-3.768 10.09l24.268 53.202a7.613 7.613 0 006.065 4.406l41.51 4.744-30.794 28.239a7.613 7.613 0 00-2.315 7.129l8.315 40.943-36.371-20.559a7.613 7.613 0 00-7.495 0l-36.371 20.561 8.315-40.943a7.617 7.617 0 00-2.315-7.129L190.16 244.91l41.51-4.744a7.616 7.616 0 006.702-8.432c-.477-4.18-4.266-7.185-8.432-6.702l-58.098 6.64a7.612 7.612 0 00-6.378 5.214 7.613 7.613 0 002.095 7.966l39.926 36.612-10.78 53.087a7.614 7.614 0 0011.211 8.146l47.157-26.659 47.157 26.659a7.61 7.61 0 008.223-.469 7.615 7.615 0 002.987-7.677l-10.78-53.087 39.926-36.612a7.612 7.612 0 002.094-7.967zM476.045 328.55h-40.299a7.615 7.615 0 00-7.616 7.616v35.873a7.615 7.615 0 007.616 7.616h40.299a7.615 7.615 0 007.616-7.616v-35.873a7.615 7.615 0 00-7.616-7.616zm-7.616 35.873h-25.066v-20.641h25.066v20.641z" />
+                                        <path
+                                            d="M504.384 71.695h-28.34a7.615 7.615 0 00-7.616 7.616v28.254h-25.066V79.311a7.615 7.615 0 00-7.616-7.616h-263.04a7.615 7.615 0 00-7.616 7.616 7.615 7.615 0 007.616 7.616H428.13v28.254a7.615 7.615 0 007.616 7.616h40.299a7.615 7.615 0 007.616-7.616V86.928h13.108v338.145H483.66v-24.692a7.615 7.615 0 00-7.616-7.616h-40.299a7.615 7.615 0 00-7.616 7.616v24.692H82.014v-24.692a7.615 7.615 0 00-7.616-7.616H35.956a7.615 7.615 0 00-7.616 7.616v24.692H15.232V86.928H28.34v28.254a7.615 7.615 0 007.616 7.616h38.44a7.615 7.615 0 007.616-7.616V86.928h29.862a7.615 7.615 0 007.616-7.616 7.615 7.615 0 00-7.616-7.616H74.398a7.615 7.615 0 00-7.616 7.616v28.254H43.573V79.311a7.615 7.615 0 00-7.616-7.616H7.616A7.615 7.615 0 000 79.311v353.377a7.615 7.615 0 007.616 7.616h28.34a7.615 7.615 0 007.616-7.616v-24.692H66.78v24.692a7.615 7.615 0 007.616 7.616h361.349a7.615 7.615 0 007.616-7.616v-24.692h25.066v24.692a7.615 7.615 0 007.616 7.616h28.34a7.615 7.615 0 007.616-7.616V79.311a7.613 7.613 0 00-7.615-7.616z" />
+                                        <path
+                                            d="M74.398 264.336H35.956a7.615 7.615 0 00-7.616 7.616v35.873a7.615 7.615 0 007.616 7.616h38.44a7.615 7.615 0 007.616-7.616v-35.873h.001a7.613 7.613 0 00-7.615-7.616zm-7.618 35.873H43.573v-20.641H66.78v20.641zM74.398 200.121H35.956a7.615 7.615 0 00-7.616 7.616v35.874a7.615 7.615 0 007.616 7.616h38.44a7.615 7.615 0 007.616-7.616v-35.874h.001a7.613 7.613 0 00-7.615-7.616zm-7.618 35.874H43.573v-20.642H66.78v20.642z" />
+                                        <path
+                                            d="M476.045 135.908h-40.299a7.615 7.615 0 00-7.616 7.616v35.873a7.616 7.616 0 007.616 7.616h40.299a7.615 7.615 0 007.616-7.616v-35.873a7.615 7.615 0 00-7.616-7.616zm-7.616 35.872h-25.066v-20.641h25.066v20.641z" />
+                                        <path
+                                            d="M74.398 135.907H35.956a7.615 7.615 0 00-7.616 7.616v35.873a7.615 7.615 0 007.616 7.616h38.44a7.615 7.615 0 007.616-7.616v-35.873h.001a7.613 7.613 0 00-7.615-7.616zm-7.618 35.874H43.573V151.14H66.78v20.641z" />
+                                        <path
+                                            d="M74.398 328.55H35.956a7.615 7.615 0 00-7.616 7.616v35.873a7.615 7.615 0 007.616 7.616h38.44a7.615 7.615 0 007.616-7.616v-35.873a7.613 7.613 0 00-7.614-7.616zm-7.618 35.873H43.573v-20.641H66.78v20.641z" />
+                                        <path
+                                            d="M476.045 264.336h-40.299a7.615 7.615 0 00-7.616 7.616v35.873a7.615 7.615 0 007.616 7.616h40.299a7.615 7.615 0 007.616-7.616v-35.873a7.615 7.615 0 00-7.616-7.616zm-7.616 35.873h-25.066v-20.641h25.066v20.641zM476.045 200.121h-40.299a7.615 7.615 0 00-7.616 7.616v35.874a7.615 7.615 0 007.616 7.616h40.299a7.615 7.615 0 007.616-7.616v-35.874a7.615 7.615 0 00-7.616-7.616zm-7.616 35.874h-25.066v-20.642h25.066v20.642z" />
+                                    </svg><br>
+                                    للدخول للاستراحة<br>
+                                    أضغط هنا
+                                </a></div>
+                            <div class="logoimg"><a style="font-size: 16px;" class="c1" href="/estra7h.html"
+                                    target="_blank"><svg fill="#d4002e" width="60" height="65"
+                                        viewBox="0 0 72.611 72.611">
+                                        <path
+                                            d="M67.128 30.823C67.128 13.828 53.305 0 36.307 0c-2.862 0-5.617.423-8.247 1.157l-.062-.042c-.014.021-.025.044-.04.065C15.013 4.831 5.484 16.723 5.484 30.821a30.619 30.619 0 005.033 16.831H6.934v24.96h58.748v-24.96h-3.581a30.573 30.573 0 005.027-16.829zm-3.066-1.491H52.953c-.109-3.312-.483-6.568-1.149-9.729h9.952a27.487 27.487 0 012.306 9.729zm-3.871-12.727h-9.125c-1.115-4.104-2.68-8.033-4.724-11.715a28.014 28.014 0 0113.849 11.715zM37.805 3.069c1.45.078 2.876.238 4.264.533a49.118 49.118 0 015.912 13.005H37.805V3.069zm0 16.534h10.946c.708 3.156 1.1 6.409 1.219 9.729H37.807v-9.729h-.002zm0 12.715h12.189c-.062 3.312-.405 6.569-1.062 9.731H37.805v-9.731zm0 12.724h10.406a54.075 54.075 0 01-.81 2.614h-9.597v-2.614zM29.902 3.763a27.926 27.926 0 014.91-.695v13.538H24.406a49.576 49.576 0 015.496-12.843zM22.62 29.332c.062-3.31.408-6.568 1.063-9.729h11.129v9.729H22.62zm12.192 2.986v9.731H23.864c-.705-3.157-1.097-6.413-1.215-9.731h12.163zM25.705 5.106a52.769 52.769 0 00-4.379 11.503h-8.904c3.066-5.126 7.712-9.202 13.283-11.503zM10.858 19.603h9.787a56.337 56.337 0 00-1.021 9.729H8.549a27.663 27.663 0 012.309-9.729zM8.551 32.318H19.66c.11 3.314.484 6.569 1.152 9.731H10.86a27.577 27.577 0 01-2.309-9.731zM21.55 45.042a56.2 56.2 0 00.792 2.614h-8.12a28.67 28.67 0 01-1.798-2.614h9.126zM25 66.822v1.455H13.5V51.988h3.401v13.388H25v1.446zm-.365-21.78H34.81v2.614h-9.317c-.302-.867-.604-1.728-.858-2.614zm5.166 23.235H26.4V51.988h3.401v16.289zm9.956 0h-3.233l-5.517-16.289h3.614L38.2 64.415l3.567-12.427H45.276l-5.519 16.289zm19.357-1.455v1.455H46.756V51.988H58.74v2.893h-8.586v3.455h7.963v2.801h-7.963v4.242h8.965v1.442h-.005zm-.718-19.166h-7.849c.262-.867.516-1.733.741-2.614h8.903a28.429 28.429 0 01-1.795 2.614zm-6.428-5.606a56.526 56.526 0 001.02-9.731h11.074a27.519 27.519 0 01-2.306 9.731h-9.788z" />
+                                    </svg><br> للدخول للبث المباشر <br>أضغط هنا </a></div>
+                        </div>
+                        <br><br><br>
+                        <p><a style="text-decoration: none; color: #44b4e4; padding: 5px;border: 1px solid; border-radius: 10px;"
+                                href="status.html">إذا لم يتم الأتصال تلقائيا أضغط هنا </a>
+                            <br>
+                        <div style="background: #E92527;" class="data"><span>التحميل المتبقي :</span><span
+                                id="remain_bytes_total">غير محدود </span></div>
+                        <div style="background: #23b111;" class="data"><span>الوقت المتبقي :</span><span
+                                id="session_time_left">غير محدود</span></div>
+                        <div style="background: #a515aa;" class="data"><span>متصل منذ :</span><span id="uptime"></span>
+                        </div>
+                        <div style="background: #1d9cce;" class="data"><span id="sps">سرعة
+                                أفتراضية </span>
+                            <span>
+                                <select class="sd" id="sch">
+                                    <option value="" select hidden>أضغط للتغيير </option>
+                                    <option value="economic">سرعة اقتصادية</option>
+                                    <option value="normal">سرعة افتراضية</option>
+                                    <option value="middle">سرعة متوسطة</option>
+                                    <option value="very">سرعة عالية</option>
+                                </select>
+                            </span>
+                        </div>
+                        <div style="margin: 15px auto; text-align: center;">
+                            <a style="display: inline-block; text-decoration: none; color: #fff; background: linear-gradient(135deg, #11998e, #38ef7d); border: 1px solid rgba(255,255,255,0.3); font-size: 14px; font-weight: 800; padding: 10px 18px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                                href="https://www.tvquran.com/" target="_blank">
+                                📖 انقر هنا لفتح موقع القرآن الكريم مجاناً
+                            </a>
+                        </div>
+                        <button class=" app-submit logout-submit" erase-cookie clear-hot-cookie>تسجيل الخروج </button>
+                        <div class="btns btns2">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a style="padding-right:20px ;" href="tel:+967773134765">اتصال
+                                            <img class="login-icon a-icon" src="img/c.svg" alt="#" /></a>
+                                    </td>
+                                    <td style="width: 33%;">
+                                        <img src="img/robot.png" width="100%" alt="">
+                                    </td>
+                                    <td>
+                                        <a style="padding-left:20px ;" href="https://wa.me/96773134765">
+                                            <img style="left: 1px; right: unset;" class="login-icon a-icon"
+                                                src="img/w.svg" alt="#" />
+                                            واتساب</a>
+                                    </td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h3>خدمة العملاء</h3>
+                        <h4>738172536 - 773134765 </h4>
+                    </div>
+                </div>
+                <div class="app" id="block">
+                    <div class="app-top">
+                        <p class="title">انت محظور</p>
+                    </div>
+                    <div class="app-bot">
+                        <div style="padding: 25px">
+                            <p class="contact-text">لقد تم حظرك بسبب محاولات تسجيل الدخول الكثيرة الخاطئة</p>
+                            <div class="app-user"><span>بقي على فك الحظر: </span><span count-down-span></span></div>
+                        </div>
+
+                        <div class="bottom-info" style="right: 86px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/hotInImprover.min.js"></script>
+        <script src="js/hotCookie.min.js"></script>
+        <script src="js/hotBlocker.min.js" enable-hot-blocker try-count="10" block-time="1"></script>
+        <script src="js/main.min.js" link-login-only="$(link-login-only)"></script>
+</body>
+
+</html>
