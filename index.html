@@ -8,32 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<style>
-    .img1::before,
-    .img6::before {
-        content: "الأسطوره للذهب والمجوهرات";
-    }
-
-    .img2::before,
-    .img7::before {
-        content: "محلات طلال الحميدي التجارية";
-    }
-
-    .img3::before,
-    .img8::before {
-        content: "عروض حصرية ومميزات لا تنتهي ";
-    }
-
-    .img4::before,
-    .img9::before {
-        content: "مركز الحياة الطبي التخصصي";
-    }
-
-    .img5::before,
-    .img10::before {
-        content: "مركز التلميع الساطع";
-    }
-</style>
 
 <body translate="no">
     <script>
@@ -199,10 +173,90 @@
             });
         }
 
+        var adsList = [
+            { title: "عروض حصرية ومميزات لا تنتهي", img: "adimg/1.jpg" },
+            { title: "محلات طلال الحميدي التجارية", img: "adimg/2.jpg" },
+            { title: "الأسطوره للذهب والمجوهرات", img: "adimg/3.jpg" },
+            { title: "مركز الحياة الطبي التخصصي", img: "adimg/4.jpg" },
+            { title: "مركز التلميع الساطع", img: "adimg/5.jpg" },
+            { title: "تموينات الحميدي", img: "adimg/6.jpg" }
+        ];
+
+        function renderDynamicAds() {
+            var box = document.getElementById('adsbox');
+            if (!box || typeof adsList === 'undefined' || !adsList.length) return;
+
+            var items = adsList.slice();
+            // Fill 3D cylinder ring with at least 10 cards to maintain original compact spacing
+            while (items.length > 0 && items.length < 10) {
+                items = items.concat(adsList);
+            }
+
+            var total = items.length;
+            var angleStep = 360 / total;
+            var radius = 280; // Original 3D depth
+
+            box.innerHTML = '';
+
+            items.forEach(function (ad, idx) {
+                var span = document.createElement('span');
+                var angle = idx * angleStep;
+                span.style.transform = 'rotateY(' + angle.toFixed(2) + 'deg) translateZ(' + radius + 'px)';
+
+                var imgDiv = document.createElement('div');
+                imgDiv.className = 'img';
+                imgDiv.setAttribute('data-title', ad.title || '');
+                imgDiv.style.background = 'url("' + ad.img + '") center center / cover no-repeat';
+
+                span.appendChild(imgDiv);
+                box.appendChild(span);
+            });
+        }
+
+        function initAdsBoxClick() {
+            var box = document.getElementById('adsbox');
+            var oflow = document.querySelector('.oflowimg');
+            var flowImg = document.getElementById('flowimg');
+            var closeBtn = document.querySelector('.closs');
+
+            if (box) {
+                box.addEventListener('click', function (e) {
+                    var imgEl = e.target.closest('.img');
+                    if (!imgEl) return;
+                    var bg = window.getComputedStyle(imgEl).backgroundImage;
+                    if (bg && bg !== 'none') {
+                        var url = bg.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+                        if (flowImg && oflow) {
+                            flowImg.setAttribute('src', url);
+                            oflow.style.display = 'block';
+                        }
+                    }
+                });
+            }
+
+            if (closeBtn && oflow) {
+                closeBtn.onclick = function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    oflow.style.display = 'none';
+                };
+            }
+
+            if (oflow) {
+                oflow.onclick = function (e) {
+                    if (e.target === oflow || e.target.classList.contains('closs')) {
+                        oflow.style.display = 'none';
+                    }
+                };
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             initDynamicQuran();
             updateDateTime();
             setInterval(updateDateTime, 1000);
+            renderDynamicAds();
+            initAdsBoxClick();
             init3DBoxDrag();
         });
     </script>
@@ -261,38 +315,7 @@
                         </div>
                     </div>
                     <div style="position: relative ;" class="ads">
-                        <div class="box" id="adsbox">
-                            <span style="--i:1">
-                                <div class="img3 img"></div>
-                            </span>
-                            <span style="--i:2">
-                                <div class="img4 img"></div>
-                            </span>
-                            <span style="--i:3">
-                                <div class="img5 img"></div>
-                            </span>
-                            <span style="--i:4">
-                                <div class="img1 img"></div>
-                            </span>
-                            <span style="--i:5">
-                                <div class="img2 img"></div>
-                            </span>
-                            <span style="--i:6">
-                                <div class="img8 img"></div>
-                            </span>
-                            <span style="--i:7">
-                                <div class="img9 img"></div>
-                            </span>
-                            <span style="--i:8">
-                                <div class="img10 img"></div>
-                            </span>
-                            <span style="--i:9">
-                                <div class="img6 img"></div>
-                            </span>
-                            <span style="--i:10">
-                                <div class="img7 img"></div>
-                            </span>
-                        </div>
+                        <div class="box" id="adsbox"></div>
                     </div>
                     <div class="adds">
                         <div class="addcont">
