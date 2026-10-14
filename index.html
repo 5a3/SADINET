@@ -180,7 +180,7 @@
             { title: "مركز الحياة الطبي التخصصي", img: "adimg/4.jpg" },
             { title: "مركز التلميع الساطع", img: "adimg/5.jpg" },
             { title: "تموينات الحميدي", img: "adimg/6.jpg" },
-            { title: "بن زيد للإلكترونيات والصيانة", img: "adimg/7.jpg" }
+{ title: "بن زيد للإلكترونيات والصيانه", img: "adimg/7.jpg" }
         ];
 
         function renderDynamicAds() {
@@ -188,14 +188,19 @@
             if (!box || typeof adsList === 'undefined' || !adsList.length) return;
 
             var items = adsList.slice();
-            // Fill 3D cylinder ring with at least 10 cards to maintain original compact spacing
-            while (items.length > 0 && items.length < 10) {
+            // إذا كان عدد الإعلانات أقل من 6، نكررها حتى تكتمل الحلقة ثلاثية الأبعاد (6 كحد أدنى)
+            while (items.length > 0 && items.length < 6) {
                 items = items.concat(adsList);
             }
 
             var total = items.length;
             var angleStep = 360 / total;
-            var radius = 280; // Original 3D depth
+
+            // حساب نصف القطر ديناميكياً وفقاً للمعادلة الهندسية بناءً على عرض البطاقة (140px) ومسافة تباعد (15px)
+            // هذا يضمن مسافة تباعد متناسقة (15px) بين كل صورة والأخرى لمنع أي تداخل نهائياً مهما زاد عدد الصور حتى 10 أو أكثر
+            var cardSlotWidth = 155; // 140px card width + 15px gap
+            var dynamicRadius = Math.round((cardSlotWidth / 2) / Math.sin(Math.PI / total));
+            var radius = Math.max(180, dynamicRadius);
 
             box.innerHTML = '';
 
@@ -372,7 +377,7 @@
                                 <img class="icon" src="img/nl.png" alt="">
                             </button>
                         </form>
-                        <!-- <div style="display: none; margin: 12px auto 8px auto; width: 90%; gap: 8px; justify-content: center;">
+                        <div style=" margin: 12px auto 8px auto; width: 90%; gap: 8px; justify-content: center;">
                             <a href="match.html" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 10px; background: linear-gradient(135deg, #015081, #23b111); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);">
                                 <span>⚽</span>
                                 <span>مباريات اليوم</span>
@@ -381,7 +386,7 @@
                                 <span>🎬</span>
                                 <span>الاستراحة والبث</span>
                             </a>
-                        </div> -->
+                        </div>
                         <div class="btns">
                             <table>
                                 <tr>
